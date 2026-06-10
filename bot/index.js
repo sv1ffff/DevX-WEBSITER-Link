@@ -187,9 +187,18 @@ client.on('interactionCreate', async (interaction) => {
           try {
             await sendZip(zipPath, '', null);
           } catch (e) {
+            if (e.code === 400001) {
+              try {
+                await interaction.user.send({ content: `✅ **| تم إنشاء بورتفولو ${userData.name} بنجاح!**`, files: [{ attachment: zipPath, name: fileName }] });
+                await channel.send({ content: `✅ **| تم إنشاء بورتفولو ${userData.name} بنجاح!**\n📨 تم إرسال الملف لك عبر الخاص.\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n⏳ **سيتم قفل التذكرة تلقائياً بعد 120 ثانية.**` });
+              } catch {
+                await channel.send({ content: `⚠️ **رفع الملفات مقيد في هذه السيرفر.**\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n✅ **| تم إنشاء بورتفولو ${userData.name} بنجاح!**\n📁 يرجى تثبيت الملف.\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n⏳ **سيتم قفل التذكرة تلقائياً بعد 120 ثانية.**` });
+              }
+              setTimeout(() => { channel.delete().catch(() => {}); }, 120_000);
+              return;
+            }
             if (e.status !== 413 && e.code !== 40005 && !String(e.message).includes('large')) throw e;
             await interaction.editReply({ content: '⚠️ الملف كبير. جاري إنشاء نسخة بدون وسائط...' });
-            // delete failed zip, generate without media
             try { fs.unlinkSync(zipPath); } catch (x) {}
             zipPath = await generateSite(userData, { excludeMedia: true });
             await sendZip(zipPath, '', 'الملف مع الفيديو كبير جداً.\nتم إرسال الموقع بدون فيديو/صوت — حطهم في assets/ يدويًا.');
@@ -215,4 +224,4 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-client.login(config.token);
+client.login(config.token).catch(e => console.log('LOGIN FAILED:', e.message));
