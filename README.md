@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://i.ibb.co/xq8qjh77/image-25.jpg" alt="DEVX SQ Banner" width="600"/>
   
-  # DEVX SQ — Portfolio Generation Bot
+  # DevX SQ — Portfolio Generation Bot
   
   <p align="center">
     <strong>A fully automated Discord bot that generates stunning personal portfolio websites for your community members.</strong>
@@ -198,5 +198,5 @@ DEVXSQ-BOT/
     <img src="https://img.shields.io/badge/%F0%9F%9B%92%20Get%20your%20copy-DevX%20Store-gold?style=for-the-badge&labelColor=black" alt="Get your copy"/>
   </a>
   <br/><br/>
-  <sub>© 2026 DEVX SQ. All rights reserved.</sub>
+  <sub>© 2026 DevX SQ. All rights reserved.</sub>
 </div>
